@@ -1,26 +1,145 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  --font-oranienbaum: var(--font-oranienbaum);
+  --font-mea: var(--font-mea);
+  --font-cinzel: var(--font-cinzel);
+  --font-cormorant: var(--font-cormorant);
+  --font-montserrat: var(--font-montserrat);
+
+  --font-serif: var(--font-oranienbaum);
+  --font-sans: var(--font-montserrat);
+  --font-cursive: var(--font-mea);
+  --font-cinzel-deco: var(--font-cinzel);
+  --font-cormorant-fine: var(--font-cormorant);
+  
+  --color-peach: #b87d6c;
+  --color-gold-light: #e8c87a;
+  --color-gold: #c9a96e;
+  --color-gold-dark: #8a8070;
+  --color-cream: #f0ebe0;
+  --color-charcoal: #181818;
+  
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-spin-slow: spin 25s linear infinite;
+  --animate-pulse-slow: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  --animate-glow: gold-glow 2s ease-in-out infinite alternate;
+  --animate-leaf-sway: leaf-sway 4s ease-in-out infinite alternate;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@keyframes gold-glow {
+  0% {
+    box-shadow: 0 0 5px rgba(201, 169, 110, 0.15), 0 0 10px rgba(201, 169, 110, 0.05);
+  }
+  100% {
+    box-shadow: 0 0 20px rgba(201, 169, 110, 0.5), 0 0 30px rgba(201, 169, 110, 0.25);
+  }
 }
+
+@keyframes leaf-sway {
+  0% {
+    transform: rotate(0deg) scale(1);
+  }
+  50% {
+    transform: rotate(3deg) scale(1.01);
+  }
+  100% {
+    transform: rotate(-3deg) scale(0.99);
+  }
+}
+
+:root {
+  background-color: #0d0d0d;
+  color: #f0ebe0;
+}
+
+/* Glassmorphism Premium Utility */
+.glass {
+  background: rgba(13, 13, 13, 0.7);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(201, 169, 110, 0.15);
+}
+
+.glass-dark {
+  background: rgba(10, 10, 10, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(201, 169, 110, 0.2);
+}
+
+/* Gold Text Gradient */
+.text-gold-gradient {
+  background: linear-gradient(135deg, #8a8070 0%, #c9a96e 50%, #e8c87a 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Background Gold Dust Sparkle Overlay */
+.bg-sparkles {
+  background-image: 
+    radial-gradient(circle at 15% 25%, rgba(201, 169, 110, 0.04) 1px, transparent 1px),
+    radial-gradient(circle at 75% 35%, rgba(201, 169, 110, 0.06) 1.5px, transparent 1.5px),
+    radial-gradient(circle at 35% 75%, rgba(201, 169, 110, 0.04) 1px, transparent 1px),
+    radial-gradient(circle at 85% 80%, rgba(201, 169, 110, 0.05) 2px, transparent 2px);
+  background-size: 120px 120px;
+}
+
+/* Custom Scrollbar for Luxury Scroll Experience */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0d0d0d;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #8a8070;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #c9a96e;
+}
+
+body {
+  font-family: var(--font-oranienbaum), serif;
+  overflow-x: hidden;
+  background-color: #0d0d0d;
+  color: #f0ebe0;
+}
+
+/* Custom Font classes for easy assignment */
+.font-oranienbaum {
+  font-family: var(--font-oranienbaum), serif;
+}
+
+.font-mea {
+  font-family: var(--font-mea), cursive;
+}
+
+.font-cinzel {
+  font-family: var(--font-cinzel), serif;
+}
+
+.font-cormorant {
+  font-family: var(--font-cormorant), serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-cinzel), serif;
+  font-weight: normal;
+}
+

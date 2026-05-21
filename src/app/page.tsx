@@ -1,65 +1,145 @@
-import Image from "next/image";
+"use client";
+
+import React, { useState, useRef, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Volume2, VolumeX } from "lucide-react";
+import Envelope from "@/components/Envelope";
+import Hero from "@/components/Hero";
+import Narrative from "@/components/Narrative";
+import Countdown from "@/components/Countdown";
+import Timeline from "@/components/Timeline";
+import Venue from "@/components/Venue";
+import RSVPPortal from "@/components/RSVPPortal";
 
 export default function Home() {
+  const [envelopeOpened, setEnvelopeOpened] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+
+  // Initialize luxury ambient romantic background music
+  useEffect(() => {
+    // Exact wedding loop song from the reference site
+    audioRef.current = new Audio("/audio/background.mp3");
+    audioRef.current.loop = true;
+    audioRef.current.volume = 0.35;
+
+    return () => {
+      if (audioRef.current) {
+        audioRef.current.pause();
+      }
+    };
+  }, []);
+
+  const handleEnvelopeOpen = () => {
+    setEnvelopeOpened(true);
+    
+    // Automatically attempt to play music on envelope open (highly cinematic!)
+    if (audioRef.current) {
+      audioRef.current
+        .play()
+        .then(() => {
+          setIsPlaying(true);
+        })
+        .catch((err) => {
+          console.log("Audio autoplay prevented by browser. Guest can toggle manually.", err);
+        });
+    }
+  };
+
+  const toggleAudio = () => {
+    if (!audioRef.current) return;
+
+    if (isPlaying) {
+      audioRef.current.pause();
+      setIsPlaying(false);
+    } else {
+      audioRef.current
+        .play()
+        .then(() => {
+          setIsPlaying(true);
+        })
+        .catch((err) => {
+          console.error("Audio playback error:", err);
+        });
+    }
+  };
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+    <div className="relative min-h-screen bg-[#0d0d0d] select-none text-[#fdfbf7]">
+      
+      {/* 1. Interactive Tap Envelope Intro */}
+      <Envelope onOpen={handleEnvelopeOpen} />
+
+      {/* 2. Main Premium Invitation Site (Fades in post-envelope click) */}
+      <AnimatePresence>
+        {envelopeOpened && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1.5, ease: "easeOut" }}
+            className="flex flex-col w-full"
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
+            {/* Elegant Floating Music Controller */}
+            <motion.button
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 1 }}
+              onClick={toggleAudio}
+              className="fixed bottom-6 right-6 z-40 p-3.5 rounded-full glass hover:bg-gold hover:text-[#0d0d0d] text-gold shadow-lg hover:shadow-gold/25 transition-all duration-300 border border-gold/40 flex items-center justify-center cursor-pointer active:scale-95"
+            >
+              {isPlaying ? (
+                <>
+                  <Volume2 className="w-5 h-5 animate-pulse" />
+                  <span className="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-gold animate-ping" />
+                </>
+              ) : (
+                <VolumeX className="w-5 h-5 opacity-60" />
+              )}
+            </motion.button>
+
+            {/* Core Visual Invitation Sections (Aligned to reference site layout) */}
+            <Hero />
+            
+            <Narrative />
+            
+            <Venue />
+            
+            <Timeline />
+            
+            <RSVPPortal />
+
+            <Countdown />
+
+            {/* Premium Knexa Brand Footer */}
+            <footer className="relative bg-[#2d1e18] text-[#fdfbf7]/60 py-12 px-4 border-t border-gold/15 text-center overflow-hidden">
+              {/* Inner ornaments */}
+              <div className="absolute top-0 inset-x-0 h-[1px] bg-gradient-to-r from-transparent via-gold/20 to-transparent" />
+              
+              <div className="max-w-md mx-auto flex flex-col items-center gap-4 relative z-10">
+                <span className="text-gold text-lg font-serif italic tracking-[0.25em] uppercase">
+                  C &amp; D
+                </span>
+                
+                <p className="text-[10px] font-sans tracking-[0.35em] uppercase text-[#fdfbf7]/40 leading-relaxed font-semibold">
+                  CHAMMI &amp; DHANUKA • 20 JULY 2026
+                </p>
+                
+                <div className="h-[1px] w-12 bg-gold/20 my-2" />
+                
+                <div className="flex flex-col items-center justify-center gap-1.5 mt-2">
+                  <span className="text-[11px] font-sans tracking-[0.25em] uppercase font-semibold text-gold-light/60">
+                    POWERED BY KNEXA SYSTEM
+                  </span>
+                  <span className="text-[9px] font-sans tracking-[0.15em] uppercase opacity-40">
+                    CREATING NEXT-LEVEL DIGITAL EXPERIENCES
+                  </span>
+                </div>
+              </div>
+            </footer>
+
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
