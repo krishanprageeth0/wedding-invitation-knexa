@@ -71,18 +71,18 @@ export default function Countdown() {
           className="mb-14 flex flex-col sm:flex-row items-center gap-4 sm:gap-8 justify-center select-none"
         >
           <a 
-            href="tel:+94768802041" 
+            href="tel:0755921737" 
             className="flex items-center gap-2.5 px-5 py-2.5 rounded-full border border-gold/15 bg-black/30 text-xs tracking-[0.2em] font-cormorant text-gold hover:text-[#0d0d0d] hover:bg-gold hover:border-gold transition-all duration-500 uppercase font-semibold group shadow-md"
           >
             <Phone className="w-3 h-3 group-hover:scale-110 transition-transform duration-300" />
-            <span>Chammi: +94 76 880 2041</span>
+            <span>Chammi: 075 592 1737</span>
           </a>
           <a 
-            href="tel:+94769409786" 
+            href="tel:0755921734" 
             className="flex items-center gap-2.5 px-5 py-2.5 rounded-full border border-gold/15 bg-black/30 text-xs tracking-[0.2em] font-cormorant text-gold hover:text-[#0d0d0d] hover:bg-gold hover:border-gold transition-all duration-500 uppercase font-semibold group shadow-md"
           >
             <Phone className="w-3 h-3 group-hover:scale-110 transition-transform duration-300" />
-            <span>Dhanuka: +94 76 940 9786</span>
+            <span>Dhanuka: 075 592 1734</span>
           </a>
         </motion.div>
 
