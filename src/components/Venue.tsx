@@ -99,14 +99,14 @@ export default function Venue() {
           <span className="text-[9px] tracking-[0.2em] uppercase text-gold font-semibold font-oranienbaum mb-1 block">
             RSVP Contact Assistance
           </span>
-          <div className="flex justify-center items-center gap-6">
+          <div className="flex flex-col sm:flex-row justify-center items-center gap-4 sm:gap-8">
             <a href="tel:0755921734" className="flex items-center gap-2 text-xs font-semibold tracking-wider text-[#f0ebe0]/80 hover:text-gold font-oranienbaum transition-colors duration-300">
               <Phone className="w-3.5 h-3.5 text-gold" />
-              <span>075 592 1734</span>
+              <span>Dhanuka: 075 592 1734</span>
             </a>
             <a href="tel:0755921737" className="flex items-center gap-2 text-xs font-semibold tracking-wider text-[#f0ebe0]/80 hover:text-gold font-oranienbaum transition-colors duration-300">
               <Phone className="w-3.5 h-3.5 text-gold" />
-              <span>075 592 1737</span>
+              <span>Chammi: 075 592 1737</span>
             </a>
           </div>
         </motion.div>
