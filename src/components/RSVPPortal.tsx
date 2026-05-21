@@ -58,23 +58,19 @@ export default function RSVPPortal() {
 
     try {
       if (scriptUrl) {
-        const response = await fetch(scriptUrl, {
+        // Send data to Google Sheet using no-cors to completely bypass browser CORS preflight checks
+        await fetch(scriptUrl, {
           method: "POST",
-          mode: "cors",
+          mode: "no-cors",
           headers: {
-            "Content-Type": "application/json",
+            "Content-Type": "text/plain",
           },
           body: JSON.stringify(formData),
         });
         
-        if (response.ok) {
-          setSubmittedName(formData.fullName);
-          setShowSuccessModal(true);
-          resetForm();
-        } else {
-          console.warn("Script URL response not standard, simulating success.");
-          triggerSuccessFallback();
-        }
+        setSubmittedName(formData.fullName);
+        setShowSuccessModal(true);
+        resetForm();
       } else {
         await new Promise((resolve) => setTimeout(resolve, 1500));
         triggerSuccessFallback();
